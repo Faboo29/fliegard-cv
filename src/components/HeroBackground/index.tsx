@@ -2,10 +2,10 @@
 
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { getCurves } from "./curves";
+import { CurveRef } from "@/types";
+import { CURVE_CONFIGURATION } from "./constants";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import vertexShader from "./shaders/vertex.glsl";
-import fragmentShader from "./shaders/fragment.glsl";
-import { alphaT } from "three/webgpu";
 
 type Particle = {
   mesh: THREE.Mesh<
@@ -19,16 +19,12 @@ type Particle = {
   alphaDirection: 1 | -1;
 };
 
-const easeInOutSine = (t: number): number => {
-  return -(Math.cos(Math.PI * t) - 1) / 2;
-};
-
 const HeroBackground = () => {
   const backgroundRef = useRef<HTMLDivElement | null>(null);
-  const particleRef = useRef<Particle[] | null>(null);
+  const cameraRotationAngle = useRef<number>(0);
+  const curveRef = useRef<CurveRef>(new Map());
 
   useEffect(() => {
-    // Scene, Camera, Renderer
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
       75,
@@ -37,9 +33,10 @@ const HeroBackground = () => {
       1000
     );
 
-    const renderer = new THREE.WebGLRenderer();
-    const controls = new OrbitControls(camera, renderer.domElement);
-    const baseColor = new THREE.Color(0x0000ff); // Blue base color
+    const renderer = new THREE.WebGLRenderer({ alpha: true });
+    // const controls = new OrbitControls(camera, renderer.domElement);
+
+    const baseColor = new THREE.Color(0x1ecbe1);
 
     renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -48,32 +45,29 @@ const HeroBackground = () => {
       backgroundRef.current.appendChild(renderer.domElement);
     }
 
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    const startPoint = new THREE.Vector3(-width / 100, height / 100, 0);
-    const endpoint = new THREE.Vector3(width / 100, -height / 100, 0);
-    const curve = new THREE.CatmullRomCurve3([
-      startPoint,
-      new THREE.Vector3(-20, 0, -3),
-      new THREE.Vector3(-5, 4, 2),
-      new THREE.Vector3(0, -4, -2),
-      new THREE.Vector3(10, 0, 3),
-      endpoint,
-    ]);
+    const axessHelper = new THREE.AxesHelper(20);
 
-    const numParticles = 100;
-    const particles: Particle[] = [];
-    const particleGeometry = new THREE.SphereGeometry(0.05, 8, 8);
-    const particleMaterial = new THREE.MeshBasicMaterial({
-      color: baseColor,
-      transparent: true,
-      opacity: 1,
-    });
+    // scene.add(axessHelper);
 
-    for (let i = 0; i < numParticles; i++) {
-      const t = i / numParticles;
+    const curves = getCurves();
 
-      if (!particles[i]) {
+    curves.forEach((curve, curveKey) => {
+      const particles: Particle[] = [];
+      const curveConfiguration = CURVE_CONFIGURATION[curveKey];
+      const { COLOR, PARTICLE_NUMBER, PARTICLE_RADIUS } = curveConfiguration;
+      const particleGeometry = new THREE.SphereGeometry(
+        PARTICLE_RADIUS ?? 0.01,
+        8,
+        8
+      );
+      const particleMaterial = new THREE.MeshBasicMaterial({
+        color: COLOR ?? baseColor,
+        transparent: true,
+        opacity: 1,
+      });
+
+      for (let i = 0; i < PARTICLE_NUMBER; i++) {
+        const t = i / PARTICLE_NUMBER;
         const particle = new THREE.Mesh(particleGeometry, particleMaterial);
 
         scene.add(particle);
@@ -86,41 +80,52 @@ const HeroBackground = () => {
           alphaDirection: 1,
         });
       }
-    }
 
-    particleRef.current = particles;
-    camera.position.z = 15;
+      curveRef.current.set(curveKey, {
+        curve,
+        particles,
+      });
+    });
+
+    camera.position.z = 12;
 
     // Animation function
     const animate = () => {
       requestAnimationFrame(animate);
 
-      if (particleRef.current) {
-        particleRef.current.forEach((particle, index) => {
-          // Particle position
-          particle.t += particle.speed;
+      const radius = -2;
+      cameraRotationAngle.current += 0.002;
+      const angle = cameraRotationAngle.current;
 
-          if (particle.t > 1) {
-            particle.t = 0;
-          }
+      camera.position.set(radius * Math.cos(angle), 0, 8);
+      camera.lookAt(0, 0, 0);
 
-          const point = curve.getPointAt(particle.t);
+      if (curveRef.current.size > 0) {
+        curveRef.current.forEach((curveSection, curveKey) => {
+          curveSection.particles.forEach((particle) => {
+            particle.t += particle.speed;
 
-          particle.mesh.position.set(point.x, point.y, point.z);
+            if (particle.t > 1) {
+              particle.t = 0;
+            }
 
-          // Particle alpha
-          if (particle.alphaT > 1) {
-            particle.alphaDirection = -1;
-          } else if (particle.alphaT < 0.5) {
-            particle.alphaDirection = 1;
-          }
+            const point = curveSection.curve.getPointAt(particle.t);
 
-          particle.alphaT += 0.005 * particle.alphaDirection;
-          particle.mesh.material.opacity = particle.alphaT;
+            particle.mesh.position.set(point.x, point.y, point.z);
+
+            // Particle alpha
+            if (particle.alphaT > 0.8) {
+              particle.alphaDirection = -1;
+            } else if (particle.alphaT < 0.4) {
+              particle.alphaDirection = 1;
+            }
+
+            particle.alphaT += 0.0005 * particle.alphaDirection;
+            particle.mesh.material.opacity = particle.alphaT;
+          });
         });
       }
 
-      controls.update();
       renderer.render(scene, camera);
     };
 
@@ -147,8 +152,12 @@ const HeroBackground = () => {
 
   return (
     <div
-      className="fixed w-screen h-screen top-0 left-0 z-0"
+      className="fixed w-screen h-screen top-0 left-0 -z-10"
       ref={backgroundRef}
+      style={{
+        background: "url('/bg-dark.jpg') no-repeat 30% 50%",
+        backgroundSize: "cover",
+      }}
     />
   );
 };

@@ -1,0 +1,30 @@
+.avatar-circle {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: red;
+  top: -50px;
+  left: -50px;
+  z-index: 1;
+  border-radius: 10000px;
+  background: rgb(2, 0, 36);
+  border: 20px solid #000000;
+  background: linear-gradient(
+    213deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(103, 147, 196, 1) 44%,
+    rgba(9, 124, 154, 1) 100%
+  );
+  opacity: 0.1;
+  filter: blur(8px);
+}
+
+.theme-bg-gradient-1 {
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    213deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(103, 147, 196, 1) 44%,
+    rgba(9, 124, 154, 1) 100%
+  );
+}
