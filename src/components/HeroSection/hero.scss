@@ -1,0 +1,31 @@
+.hero-section {
+  min-height: 90vh;
+}
+
+.avatar-circle {
+  position: absolute;
+  width: 550px;
+  height: 550px;
+  background: red;
+  top: 20px;
+  left: 50px;
+  z-index: 1;
+  border-radius: 10000px;
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    213deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(103, 147, 196, 1) 44%,
+    rgba(9, 124, 154, 1) 100%
+  );
+  opacity: 0.16;
+  filter: blur(0px);
+}
+
+.avatar-wrapper {
+  border-radius: 10000px;
+  box-shadow: 10px 10px 6px 10px rgba(0, 0, 0, 1);
+  width: 400px;
+  height: 400px;
+  position: relative;
+}

@@ -1,10 +1,6 @@
-import * as THREE from "three";
-import {
-  CURVE_CONFIGURATION,
-  CURVE_NAME,
-} from "@/components/HeroBackground/constants";
+import * as THREE from 'three';
+import { CURVE_CONFIGURATION } from '@/components/HeroBackground/constants';
 
-type CurveName = (typeof CURVE_NAME)[keyof typeof CURVE_NAME];
 type CurveType = keyof typeof CURVE_CONFIGURATION;
 
 export type CurveRef = Map<

@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import './styles/index.scss';
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -27,11 +29,11 @@ body {
 }
 
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 h1,
 h2,
 h3 {
-  font-family: "Josefin Sans", sans-serif;
+  font-family: 'Josefin Sans', sans-serif;
 }
