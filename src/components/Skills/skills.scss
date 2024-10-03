@@ -9,7 +9,7 @@
 
 .skill-grid-item {
   padding: 2rem 1rem;
-  background: rgba($color: $blue2, $alpha: 0.4);
+  background: rgba($color: $blue3, $alpha: 0.6);
   border-radius: 0.25rem;
   backdrop-filter: blur(1px);
   display: flex;
@@ -49,12 +49,6 @@
     display: flex;
     flex-direction: column;
     list-style-type: disc;
-
-    .skill-title {
-    }
-
-    .skill-description {
-    }
 
     > li {
       &.skill-active {

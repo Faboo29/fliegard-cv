@@ -8,7 +8,7 @@ const HeroSection = () => {
     <section className="hero-section flex flex-col text-center overflow-hidden">
       <div className="relative flex flex-grow flex-col h-full z-10">
         <div className="m-auto flex items-center lg:items-center flex-col lg:flex-row">
-          <div className="avatar relative -top-4 lg:-top-32">
+          <div className="avatar relative -top-4 lg:-top-30">
             <div className="avatar-circle" />
             <div className="avatar-wrapper overflow-hidden">
               <Image
@@ -32,6 +32,17 @@ const HeroSection = () => {
             <p className="text-indigo-50 leading-loose font-roboto font-thin text-4xl">
               Web developer
             </p>
+          </div>
+        </div>
+        <div className="text-white p-4 flex justify-center">
+          <div className="menu-item px-4 py-8 font-roboto font-thin text-4xl">
+            <a href="#about">About</a>
+          </div>
+          <div className="menu-item px-4 py-8 font-roboto font-thin text-4xl">
+            |
+          </div>
+          <div className="menu-item px-4 py-8 font-roboto font-thin text-4xl">
+            <a href="#skills">Skills</a>
           </div>
         </div>
       </div>

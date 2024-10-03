@@ -2,7 +2,7 @@ import './about.scss';
 
 const About = () => {
   return (
-    <section className="about-section flex py-52 px-4">
+    <section id="about" className="about-section flex py-52 px-4">
       <div
         className="flex flex-col w-full text-white text-center items-center"
         style={{ flexGrow: 1 }}

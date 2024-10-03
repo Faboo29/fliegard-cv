@@ -4,7 +4,7 @@ import './skills.scss';
 
 const SkillSection = () => {
   return (
-    <section className="skill-section p-12 text-center text-white">
+    <section id="skills" className="skill-section p-12 text-center text-white">
       <h2 className="text-8xl font-josefin text-blueLight my-10">Skills</h2>
       <div className="grid skill-grid">
         {skillsData.map((skillCategory, iIndex) => {

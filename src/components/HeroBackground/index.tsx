@@ -18,10 +18,6 @@ type Particle = {
   alphaDirection: 1 | -1;
 };
 
-const lerp = (start: number, end: number, factor: number) => {
-  return start + (end - start) * factor;
-};
-
 const HeroBackground = () => {
   const backgroundRef = useRef<HTMLDivElement | null>(null);
   const curveRef = useRef<CurveRef>(new Map());
@@ -93,8 +89,6 @@ const HeroBackground = () => {
     // Animation function
     const animate: FrameRequestCallback = (time) => {
       requestAnimationFrame(animate);
-      // const scrollStrength =
-      //   scrollDeltaRef.current > 0.5 ? scrollDeltaRef.current * 0.000003 : 0;
 
       camera.position.x = 10 * Math.sin(time * 0.00001);
       camera.position.z = 10 * Math.cos(time * 0.00001);
@@ -127,7 +121,7 @@ const HeroBackground = () => {
         });
       }
 
-      scrollDeltaRef.current = lerp(scrollDeltaRef.current, 0, 0.01);
+      scrollDeltaRef.current = scrollDeltaRef.current * 0.001;
 
       renderer.render(scene, camera);
     };
@@ -163,6 +157,11 @@ const HeroBackground = () => {
     // Cleanup on component unmount
     return () => {
       window.removeEventListener('resize', handleResize);
+      const backgroundRefCurrent = backgroundRef.current;
+
+      if (backgroundRefCurrent) {
+        backgroundRefCurrent.removeChild(renderer.domElement);
+      }
     };
   }, []);
 
