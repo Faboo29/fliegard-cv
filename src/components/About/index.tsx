@@ -2,13 +2,13 @@ import './about.scss';
 
 const About = () => {
   return (
-    <section className="about-section flex py-12 px-4">
+    <section className="about-section flex py-52 px-4">
       <div
-        className="flex flex-col w-full h-full text-white text-center items-center"
+        className="flex flex-col w-full text-white text-center items-center"
         style={{ flexGrow: 1 }}
       >
         <div className="title">
-          <h2 className="text-8xl font-josefin text-blueLight my-10">
+          <h2 className="text-8xl font-josefin text-blueLight mb-10">
             About me
           </h2>
         </div>

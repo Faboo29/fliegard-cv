@@ -1,0 +1,9 @@
+@import './variables';
+
+@mixin min-media($breakpoint) {
+  $breakpoint-value: map-get($breakpoints, $breakpoint);
+
+  @media screen and (min-width: #{$breakpoint-value}) {
+    @content;
+  }
+}

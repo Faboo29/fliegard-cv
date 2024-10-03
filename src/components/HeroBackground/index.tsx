@@ -18,10 +18,18 @@ type Particle = {
   alphaDirection: 1 | -1;
 };
 
+const lerp = (start: number, end: number, factor: number) => {
+  return start + (end - start) * factor;
+};
+
 const HeroBackground = () => {
   const backgroundRef = useRef<HTMLDivElement | null>(null);
-  const cameraRotationAngle = useRef<number>(0);
   const curveRef = useRef<CurveRef>(new Map());
+  const scrollDeltaRef = useRef(0);
+  const scrollStatus = useRef<{ lastScrollY: number; direction: 1 | -1 }>({
+    lastScrollY: 0,
+    direction: 1
+  });
 
   useEffect(() => {
     const scene = new THREE.Scene();
@@ -68,7 +76,7 @@ const HeroBackground = () => {
         particles.push({
           mesh: particle,
           t,
-          speed: Math.random() * 0.0001 + 0.0001,
+          speed: Math.random() * 0.00005 + 0.00005,
           alphaT: Math.random() * 0.5 + 0.5,
           alphaDirection: 1
         });
@@ -80,17 +88,17 @@ const HeroBackground = () => {
       });
     });
 
-    camera.position.z = 14;
+    camera.position.z = 10;
 
     // Animation function
-    const animate = () => {
+    const animate: FrameRequestCallback = (time) => {
       requestAnimationFrame(animate);
+      // const scrollStrength =
+      //   scrollDeltaRef.current > 0.5 ? scrollDeltaRef.current * 0.000003 : 0;
 
-      const radius = -2;
-      cameraRotationAngle.current += 0.006;
-      const angle = cameraRotationAngle.current;
+      camera.position.x = 10 * Math.sin(time * 0.00001);
+      camera.position.z = 10 * Math.cos(time * 0.00001);
 
-      camera.position.set(radius * Math.cos(angle), 0, 12);
       camera.lookAt(0, 0, 0);
 
       if (curveRef.current.size > 0) {
@@ -107,23 +115,25 @@ const HeroBackground = () => {
             particle.mesh.position.set(point.x, point.y, point.z);
 
             // Particle alpha
-            if (particle.alphaT > 0.8) {
+            if (particle.alphaT > 0.6) {
               particle.alphaDirection = -1;
-            } else if (particle.alphaT < 0.4) {
+            } else if (particle.alphaT < 0.5) {
               particle.alphaDirection = 1;
             }
 
-            particle.alphaT += 0.0005 * particle.alphaDirection;
+            particle.alphaT += 0.001 * particle.alphaDirection;
             particle.mesh.material.opacity = particle.alphaT;
           });
         });
       }
 
+      scrollDeltaRef.current = lerp(scrollDeltaRef.current, 0, 0.01);
+
       renderer.render(scene, camera);
     };
 
     // Call the animation
-    animate();
+    animate(0);
 
     // Resize the renderer and update camera aspect ratio on window resize
     const handleResize = () => {
@@ -134,18 +144,31 @@ const HeroBackground = () => {
 
     window.addEventListener('resize', handleResize);
 
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.scrollY;
+
+      scrollDeltaRef.current += window.scrollY * 0.0001;
+
+      const scrollDelta = currentScroll - scrollStatus.current.lastScrollY;
+
+      if (scrollDelta < 0) {
+        scrollStatus.current.direction = -1;
+      } else if (scrollDelta > 0) {
+        scrollStatus.current.direction = 1;
+      }
+
+      scrollStatus.current.lastScrollY = currentScroll;
+    });
+
     // Cleanup on component unmount
     return () => {
       window.removeEventListener('resize', handleResize);
-      if (backgroundRef.current) {
-        backgroundRef.current.removeChild(renderer.domElement);
-      }
     };
   }, []);
 
   return (
     <div
-      className="fixed w-screen h-screen top-0 left-0 -z-10 page-background"
+      className="fixed w-screen top-0 left-0 -z-10"
       ref={backgroundRef}
       style={{
         background: "url('/bg-dark.jpg') no-repeat 30% 50%",

@@ -1,3 +1,5 @@
+@import '../../app/styles/helpers.scss';
+
 .hero-section {
   min-height: 90vh;
 }
@@ -25,7 +27,12 @@
 .avatar-wrapper {
   border-radius: 10000px;
   box-shadow: 10px 10px 6px 10px rgba(0, 0, 0, 1);
-  width: 400px;
-  height: 400px;
+  width: 300px;
+  height: 300px;
   position: relative;
+
+  @include min-media('sm') {
+    width: 400px;
+    height: 400px;
+  }
 }

@@ -1,4 +1,12 @@
+import GitlabIcon from '../icons/GitlabIcon';
+import HtmlIcon from '../icons/HtmlIcon';
+import JiraIcon from '../icons/JiraIcon';
+import NodeIcon from '../icons/NodeIcon';
+import NpmIcon from '../icons/NpmIcon';
+import ReactIcon from '../icons/ReactIcon';
+import SFCCIcon from '../icons/SFCCIcon';
 import TypeScriptIcon from '../icons/TypeScriptIcon';
+import ViteIcon from '../icons/ViteIcon';
 
 type SkillCategory = {
   Icon: React.ReactElement;
@@ -28,9 +36,9 @@ export const skillsData: Array<SkillCategory> = [
     ]
   },
   {
-    Icon: <TypeScriptIcon />,
+    Icon: <ReactIcon />,
     title: 'Front-End Frameworks',
-    tileClass: 'col-span-2',
+    tileClass: 'row-span-2 sm:col-span-2 sm:row-span-1',
     skills: [
       {
         id: 'react',
@@ -53,7 +61,7 @@ export const skillsData: Array<SkillCategory> = [
     ]
   },
   {
-    Icon: <TypeScriptIcon />,
+    Icon: <NodeIcon />,
     title: 'Back-End Development',
     tileClass: null,
     skills: [
@@ -72,7 +80,7 @@ export const skillsData: Array<SkillCategory> = [
     ]
   },
   {
-    Icon: <TypeScriptIcon />,
+    Icon: <ViteIcon />,
     title: 'Build Tools & Testing',
     tileClass: null,
     skills: [
@@ -91,7 +99,7 @@ export const skillsData: Array<SkillCategory> = [
     ]
   },
   {
-    Icon: <TypeScriptIcon />,
+    Icon: <GitlabIcon />,
     title: 'Version Controls & CI/CD',
     tileClass: 'row-span-2',
     skills: [
@@ -110,7 +118,7 @@ export const skillsData: Array<SkillCategory> = [
     ]
   },
   {
-    Icon: <TypeScriptIcon />,
+    Icon: <NpmIcon />,
     title: 'Package Managers',
     tileClass: null,
     skills: [
@@ -122,7 +130,7 @@ export const skillsData: Array<SkillCategory> = [
     ]
   },
   {
-    Icon: <TypeScriptIcon />,
+    Icon: <HtmlIcon />,
     title: 'Web Technologies',
     tileClass: 'row-span-2',
     skills: [
@@ -141,7 +149,7 @@ export const skillsData: Array<SkillCategory> = [
     ]
   },
   {
-    Icon: <TypeScriptIcon />,
+    Icon: <JiraIcon />,
     title: 'Project Management & Collaboration Tools',
     tileClass: null,
     skills: [
@@ -153,20 +161,7 @@ export const skillsData: Array<SkillCategory> = [
     ]
   },
   {
-    Icon: <TypeScriptIcon />,
-    title: 'Ecommerce platforms',
-    tileClass: null,
-    skills: [
-      {
-        id: 'skill-ts',
-        title: 'JavaScript & TypeScript',
-        description:
-          'Proficient in modern ES6+ JavaScript and TypeScript for writing scalable, maintainable, and strongly-typed applications.'
-      }
-    ]
-  },
-  {
-    Icon: <TypeScriptIcon />,
+    Icon: <SFCCIcon />,
     title: 'Ecommerce platforms',
     tileClass: null,
     skills: [

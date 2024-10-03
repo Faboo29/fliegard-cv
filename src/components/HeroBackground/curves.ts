@@ -10,8 +10,6 @@ export const getCurves: () => Map<
   const startPoint = new THREE.Vector3(-width / 100, height / 100, 0);
   const endpoint = new THREE.Vector3(width / 100, -height / 100, 0);
 
-  console.log('startPoint: ', startPoint);
-
   return new Map([
     [
       CURVE_NAME.BLUE,

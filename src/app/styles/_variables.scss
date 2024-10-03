@@ -3,5 +3,13 @@ $blue1: #2ea1d1;
 $blue2: #0f5e89;
 $blue3: #0a3c57;
 $blue4: #051f2d;
-
 $black1: #202020;
+
+$breakpoints: (
+  'xs': 480px,
+  'sm': 768px,
+  'md': 1024px,
+  'lg': 1280px,
+  'xl': 1440px,
+  'xxl': 1920px
+);

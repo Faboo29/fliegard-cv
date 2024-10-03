@@ -7,8 +7,8 @@ const HeroSection = () => {
   return (
     <section className="hero-section flex flex-col text-center overflow-hidden">
       <div className="relative flex flex-grow flex-col h-full z-10">
-        <div className="m-auto flex flex-nowrap items-center">
-          <div className="avatar relative -top-28">
+        <div className="m-auto flex items-center lg:items-center flex-col lg:flex-row">
+          <div className="avatar relative -top-4 lg:-top-32">
             <div className="avatar-circle" />
             <div className="avatar-wrapper overflow-hidden">
               <Image
@@ -24,7 +24,7 @@ const HeroSection = () => {
           <div className="description text-left p-4 z-10 max-w-2xl ml-12">
             <h1
               className={clsx(
-                'text-indigo-100 text-8xl font-bold uppercase font-josefin'
+                'text-indigo-100 text-6xl sm:text-8xl font-bold uppercase font-josefin'
               )}
             >
               Fabien Liegard
