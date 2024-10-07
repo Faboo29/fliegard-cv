@@ -1,16 +1,32 @@
+'use client';
+
 import clsx from 'clsx';
 import Image from 'next/image';
 
 import './hero.scss';
+import { useEffect, useState } from 'react';
 
 const HeroSection = () => {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoaded(true);
+    }, 100);
+  }, []);
+
   return (
-    <section className="hero-section flex flex-col text-center overflow-hidden">
+    <section className="hero-section flex flex-col text-center overflow-hidden z-10">
       <div className="relative flex flex-grow flex-col h-full z-10">
         <div className="m-auto flex items-center lg:items-center flex-col lg:flex-row">
           <div className="avatar relative -top-4 lg:-top-30">
-            <div className="avatar-circle" />
-            <div className="avatar-wrapper overflow-hidden">
+            <div className={clsx('avatar-circle', loaded && 'loaded')} />
+            <div
+              className={clsx(
+                'avatar-wrapper overflow-hidden',
+                loaded && 'loaded'
+              )}
+            >
               <Image
                 src={'/profile-picture.png'}
                 alt="profile"
@@ -21,7 +37,12 @@ const HeroSection = () => {
               />
             </div>
           </div>
-          <div className="description text-left p-4 z-10 max-w-2xl ml-12">
+          <div
+            className={clsx(
+              'hero-description text-left p-4 z-10 max-w-2xl ml-12',
+              loaded && 'loaded'
+            )}
+          >
             <h1
               className={clsx(
                 'text-indigo-100 text-6xl sm:text-8xl font-bold uppercase font-josefin'

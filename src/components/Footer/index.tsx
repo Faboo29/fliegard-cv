@@ -1,10 +1,12 @@
 const Footer = () => {
   return (
-    <footer className="bg-blue4 text-white mt-16">
-      <div className="footer-content p-12 flex justify-center gap-8">
-        <h3 className="uppercase font-josefin text-3xl">Contact</h3>
-        <div className="gmail">Gmail</div>
-        <div className="linkedin">LinkedIn</div>
+    <footer className="text-white mt-16 relative z-10 bg-slate-900">
+      <div className="footer-content p-12 flex flex-wrap justify-center gap-8">
+        <h3 className="uppercase font-josefin text-3xl w-full text-center">
+          Contact
+        </h3>
+        <div className="gmail font-roboto font-thin">Gmail</div>
+        <div className="linkedin font-roboto font-thin">LinkedIn</div>
       </div>
     </footer>
   );

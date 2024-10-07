@@ -90,8 +90,8 @@ const HeroBackground = () => {
     const animate: FrameRequestCallback = (time) => {
       requestAnimationFrame(animate);
 
-      camera.position.x = 10 * Math.sin(time * 0.00001);
-      camera.position.z = 10 * Math.cos(time * 0.00001);
+      camera.position.x = 10 * Math.sin(time * 0.00006);
+      camera.position.z = 10 * Math.cos(time * 0.00006);
 
       camera.lookAt(0, 0, 0);
 
@@ -170,8 +170,11 @@ const HeroBackground = () => {
       className="fixed w-screen top-0 left-0 -z-10"
       ref={backgroundRef}
       style={{
-        background: "url('/bg-dark.jpg') no-repeat 30% 50%",
-        backgroundSize: 'cover'
+        backgroundImage: "url('/bg-dark.jpg')",
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: '30% 50%',
+        backgroundSize: 'cover',
+        zIndex: 1
       }}
     />
   );
